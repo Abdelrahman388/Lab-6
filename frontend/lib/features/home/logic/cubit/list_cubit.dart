@@ -1,19 +1,43 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/features/Home/data/models/item_model.dart';
-import 'package:meta/meta.dart';
+import 'package:frontend/features/home/data/models/item_model.dart';
+import 'package:frontend/features/home/data/services/api_service.dart';
 
 part 'list_state.dart';
 
-class ShoppingCubit extends Cubit<ShoppingState> {
-  List<Item> items = mockShoppingItems;
-  late List<Item> selecteditems;
-  
-  ShoppingCubit() : super(ShoppingInitial());
+class ListCubit extends Cubit<ListState> {
+  List<Item>? items ;
+  List<Item> selectedItems=[];
+  ListCubit() : super(ListInitial());
+  final apiService = ApiService();
 
-void removeItemByName(List<Item> items, String nameToRemove) {
-  items.removeWhere((item) => item.name == nameToRemove);
-  emit(CartState());
+    Future<void> getAllItems() async {
+    try {
+      emit(ListLoading());
+      final fetchedItems = await apiService.getAllItems();
+      items=fetchedItems;
+      emit(ListLoaded(fetchedItems));
+    } catch (e) {
+      emit(ListError('Failed to load items: $e'));
+    }
+  }
+
+    void addItem(Item item) {
+    selectedItems.add(item);
+    emit(ShoppingUpdated(List.from(selectedItems)));
+  }
+  
+  void shoppingCartButton() {
+    emit(ShoppingUpdated(List.from(selectedItems)));
+  }
+  
+
 }
-void backclicked(){emit(ShoppingInitial());}
-void shoppingcartbutton(){emit(CartState());}
-}
+
+
+
+// void removeItemByName(List<Item> items, String nameToRemove) {
+//   items.removeWhere((item) => item.name == nameToRemove);
+//   emit(CartState());
+// }
+// void backclicked(){emit(ShoppingInitial());}
+// void shoppingcartbutton(){emit(CartState());}

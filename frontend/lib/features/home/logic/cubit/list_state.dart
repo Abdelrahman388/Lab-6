@@ -1,8 +1,23 @@
 part of 'list_cubit.dart';
 
 
-abstract class ShoppingState {}
+sealed class ListState {}
 
-final class ShoppingInitial extends ShoppingState {}
+final class ListInitial extends ListState {}
 
-final class CartState extends ShoppingState {}
+final class ListLoading extends ListState {}
+
+final class ListLoaded extends ListState {
+  final List<Item> items;
+  ListLoaded(this.items);
+}
+
+final class ShoppingUpdated extends ListState {  // Ensure it extends ListState
+  final List<Item> selectedItems;
+  ShoppingUpdated(this.selectedItems);
+}
+
+final class ListError extends ListState {
+  final String message;
+  ListError(this.message);
+}
