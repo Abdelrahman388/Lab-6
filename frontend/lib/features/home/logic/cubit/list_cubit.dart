@@ -21,10 +21,18 @@ class ListCubit extends Cubit<ListState> {
     }
   }
 
-    void addItem(Item item) {
+  //   void addItem(Item item) {
+  //   selectedItems.add(item);
+  //   emit(ShoppingUpdated(List.from(selectedItems)));
+  // }
+
+  void addItem(Item item) {
+  if (state is ListLoaded || state is ShoppingUpdated) {
     selectedItems.add(item);
-    emit(ShoppingUpdated(List.from(selectedItems)));
+    emit(ShoppingUpdated(List.from(selectedItems))); 
   }
+}
+
   
   void shoppingCartButton() {
     emit(ShoppingUpdated(List.from(selectedItems)));

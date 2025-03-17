@@ -16,15 +16,17 @@ class ListScreen extends StatelessWidget {
         actions: [
           IconButton(
               icon: const Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider<ListCubit>(
-                          create: (context) => ListCubit(),
-                          child: ShoppingCartScreen()),
-                    ));
-              })
+          onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => BlocProvider.value(  // ✅ Use .value to keep existing cubit
+                value: context.read<ListCubit>(),
+                child: ShoppingCartScreen(),
+              ),
+            ),
+          );
+        },)
         ],
       ),
       body: ListView.builder(
