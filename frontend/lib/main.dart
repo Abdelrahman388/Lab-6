@@ -315,7 +315,10 @@ class CartCubit extends Cubit<List<Item>> {
   }
 }
 
-// Item List Screen
+
+
+
+//Item List Screen
 class ItemListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -335,20 +338,22 @@ class ItemListScreen extends StatelessWidget {
       body: BlocBuilder<ItemCubit, List<Item>>(
         builder: (context, items) {
           if (items.isEmpty) return Center(child: CircularProgressIndicator());
-          return ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final item = items[index];
-              return ListTile(
-                leading: Image.network(item.imageUrl, width: 50, height: 50, fit: BoxFit.cover),
-                title: Text(item.name),
-                subtitle: Text(item.description),
-                trailing: IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () => context.read<CartCubit>().addItem(item),
-                ),
-              );
-            },
+          return GestureDetector(
+            child: ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return ListTile(
+                  leading: Image.network(item.imageUrl, width: 50, height: 50, fit: BoxFit.cover),
+                  title: Text(item.name),
+                  subtitle: Text(item.description),
+                  trailing: IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () => context.read<CartCubit>().addItem(item),
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
