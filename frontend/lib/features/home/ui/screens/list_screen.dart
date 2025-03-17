@@ -20,7 +20,7 @@ class ListScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => BlocProvider.value(  // ✅ Use .value to keep existing cubit
+              builder: (_) => BlocProvider.value(  
                 value: context.read<ListCubit>(),
                 child: ShoppingCartScreen(),
               ),

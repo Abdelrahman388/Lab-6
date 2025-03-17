@@ -81,12 +81,15 @@ class Item {
 // Item Cubit for fetching data
 class ItemCubit extends Cubit<List<Item>> {
   ItemCubit() : super([]);
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000'));
-  bool endpointworking=false;
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://localhost:8000'));
+  bool endpointworking=true;
   Future<void> fetchItems() async {
     try {
       if (endpointworking){
-        final response = await _dio.get('/items');
+        final Map<String, dynamic> data = {
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2Q4MjFiZDRkNGNmNGFhMWEzZDVhZTUiLCJpYXQiOjE3NDIyMTgxMjUsImV4cCI6MTc0MjQ3NzMyNX0._yqjqp0uKSJit4J9P4s5KUNnkoGUVjbCBT7f4zK-3Zc"
+        };
+      final response = await _dio.get('/items', data:data);
         List<Item> items = (response.data as List).map((json) => Item.fromJson(json)).toList();
         emit(items);
       }else{
