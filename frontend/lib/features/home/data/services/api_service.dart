@@ -6,7 +6,7 @@ class ApiService {
 
   ApiService() {
     _dio = Dio(BaseOptions(
-      baseUrl: 'http://localhost:3000', 
+      baseUrl: 'http://localhost:8000', 
       connectTimeout: Duration(seconds: 10),
       receiveTimeout: Duration(seconds: 10),
     ));
@@ -15,7 +15,10 @@ class ApiService {
   // Fetch all items
   Future<List<Item>> getAllItems() async {
     try {
-      final response = await _dio.get('/items');
+        final Map<String, dynamic> data = {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2Q4MjFiZDRkNGNmNGFhMWEzZDVhZTUiLCJpYXQiOjE3NDIyMTgxMjUsImV4cCI6MTc0MjQ3NzMyNX0._yqjqp0uKSJit4J9P4s5KUNnkoGUVjbCBT7f4zK-3Zc"
+  };
+      final response = await _dio.get('/items', data:data);
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         return data.map((json) => Item.fromJson(json)).toList();

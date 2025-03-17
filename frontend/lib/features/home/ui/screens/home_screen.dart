@@ -5,6 +5,17 @@ import 'package:frontend/features/home/ui/screens/list_screen.dart';
 import 'package:frontend/features/home/ui/screens/shopping_cart_screen.dart';
 
 
+// class HomeScreen extends StatelessWidget {
+//   const HomeScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<ListCubit,ListState>(builder: (context,state){
+//       return ListScreen();
+//     } );
+//   }
+// }
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

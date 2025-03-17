@@ -23,9 +23,8 @@ class ListCubit extends Cubit<ListState> {
 
   void addItem(Item item) {
     selectedItems.add(item);
-    emit(ShoppingUpdated(List.from(selectedItems)));
+    emit(ShoppingUpdated(List.from(selectedItems))); 
   }
-
   void shoppingCartButton() {
     emit(ShowCart());
   }
