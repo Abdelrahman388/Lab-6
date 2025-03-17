@@ -21,3 +21,4 @@ final class ListError extends ListState {
   final String message;
   ListError(this.message);
 }
+final class ShowCart extends ListState{}

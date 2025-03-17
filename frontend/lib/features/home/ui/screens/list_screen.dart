@@ -17,13 +17,7 @@ class ListScreen extends StatelessWidget {
           IconButton(
               icon: const Icon(Icons.shopping_cart),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider<ListCubit>(
-                          create: (context) => ListCubit(),
-                          child: ShoppingCartScreen()),
-                    ));
+                BlocProvider.of<ListCubit>(context).shoppingCartButton();
               })
         ],
       ),
@@ -32,12 +26,12 @@ class ListScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final item = mockShoppingItems[index];
           return ListTile(
-            leading: Image.network(
-              item.imageUrl,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-            ),
+            // leading: Image.network(
+            //   item.imageUrl,
+            //   width: 50,
+            //   height: 50,
+            //   fit: BoxFit.cover,
+            // ),
             title: Text(item.name),
             subtitle: Text("\$${item.price.toStringAsFixed(2)}"),
             trailing: IconButton(

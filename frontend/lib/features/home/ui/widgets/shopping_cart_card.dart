@@ -1,44 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/features/Home/data/models/item_model.dart';
-import 'package:frontend/features/home/logic/cubit/shopping_cubit.dart';
+import 'package:frontend/features/home/data/models/item_model.dart';
+import 'package:frontend/features/home/logic/cubit/list_cubit.dart';
 
-class ShoppingCartCard extends StatelessWidget {
-  final List<Item> items;
-  const ShoppingCartCard({super.key, required this.items});
+class Shoppingcartwidget extends StatelessWidget {
+  final List<Item> Items;
+  const Shoppingcartwidget({super.key, required this.Items});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: items.length,
+      itemCount: Items.length,
       itemBuilder: (context, index) {
-        final item = items[index];
+        final item = Items[index];
         return ListTile(
           leading: CircleAvatar(
+            backgroundColor: Colors.blueAccent,
             backgroundImage: NetworkImage(item.imageUrl),
+            onBackgroundImageError: (error, stackTrace) {
+              debugPrint("Image load error: $error");
+            },
+            child: Icon(Icons.broken_image,
+                size: 30, color: Colors.white), // Default icon
           ),
           title: Text(
             item.name,
-            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
           subtitle: Text(
             item.description,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.grey),
+            style: TextStyle(color: Colors.grey),
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 "\$${item.price}",
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               IconButton(
-                icon: const Icon(Icons.remove_circle, color: Colors.red),
+                icon: Icon(Icons.remove_circle),
+                color: Colors.red,
                 onPressed: () {
-                  context.read<ShoppingCubit>().removeItemByName(item.name);
+                  BlocProvider.of<ListCubit>(context).removeItemByName(
+                      BlocProvider.of<ListCubit>(context).selectedItems,
+                      item.name);
                 },
               ),
             ],
